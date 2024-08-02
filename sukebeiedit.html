@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>修改sukebei網址</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .input-group {
+        margin-bottom: 10px;
+    }
+    .input-group input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+    }
+    .input-group button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+</style>
+</head>
+<body>
+    <!-- 修改sukebei網址一鍵改為可以直接餵給Aria2機器人的網址 -->
+    <div class="container">
+        <h2>修改網址</h2>
+        <div class="input-group">
+            <input type="text" id="urlInput" placeholder="輸入網址...">
+            <button onclick="modifyUrl()">轉換</button>
+        </div>
+        <div class="result" id="resultOutput"></div>
+    </div>
+
+    <script>
+        function modifyUrl() {
+            var urlInput = document.getElementById('urlInput').value;
+            
+            // 將網址中的 'download' 替換為 'view' 並移除末尾的 '.torrent'
+            var modifiedUrl = urlInput.replace(/download/g, 'view').replace(/\.torrent$/, '');
+            
+            // 將修改後的網址顯示在結果框中
+            document.getElementById('resultOutput').innerHTML = "修改後的網址: " + modifiedUrl;
+        }
+    </script>
+</body>
+</html>
