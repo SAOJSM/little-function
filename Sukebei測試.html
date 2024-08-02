@@ -11,6 +11,7 @@
     <input type="text" id="urlInput" placeholder="https://sukebei.nyaa.si/download/4152421.torrent">
     <button onclick="convertUrl()">轉換</button>
     <p>修改後網址: <span id="result"></span></p>
+    <p>Magnet網址: <span id="magnetLink"></span></p>
 
     <script>
         function convertUrl() {
@@ -24,8 +25,13 @@
                 .then(html => {
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
-                    const magnetLink = doc.querySelector('a[href^="magnet:"]').href;
-                    console.log('Magnet Link:', magnetLink);
+                    const magnetLinkElement = doc.querySelector('a[href^="magnet:"]');
+                    if (magnetLinkElement) {
+                        const magnetLink = magnetLinkElement.href;
+                        document.getElementById('magnetLink').innerText = magnetLink;
+                    } else {
+                        document.getElementById('magnetLink').innerText = '未找到Magnet網址';
+                    }
                 })
                 .catch(error => console.error('Error:', error));
         }
