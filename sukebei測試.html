@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>修改網址並抓取磁力鏈接</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .input-group {
+        margin-bottom: 10px;
+    }
+    .input-group input[type="text"] {
+        width: calc(100% - 80px);
+        padding: 10px;
+        font-size: 16px;
+    }
+    .input-group button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+    .magnet-link {
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h2>修改網址並抓取磁力鏈接</h2>
+        <div class="input-group">
+            <input type="text" id="urlInput" placeholder="輸入網址...">
+            <button onclick="modifyAndFetch()">轉換</button>
+        </div>
+        <div class="result" id="resultOutput"></div>
+        <div class="magnet-link" id="magnetOutput"></div>
+    </div>
+
+    <script>
+        function modifyAndFetch() {
+            var urlInput = document.getElementById('urlInput').value.trim();
+            
+            // 將網址中的 'download' 替換為 'view' 並移除末尾的 '.torrent'
+            var modifiedUrl = urlInput.replace(/download/g, 'view').replace(/\.torrent$/, '');
+            
+            // 顯示修改後的網址
+            var resultOutput = document.getElementById('resultOutput');
+            resultOutput.innerHTML = '<a href="' + modifiedUrl + '" target="_blank">' + modifiedUrl + '</a>';
+            
+            // 抓取網頁中的磁力鏈接
+            fetchMagnetLink(modifiedUrl);
+        }
+
+        function fetchMagnetLink(url) {
+            // 使用 AJAX 或 fetch API 從指定網址獲取網頁內容
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    // 在這裡解析網頁內容，找到磁力鏈接的位置並提取
+                    var parser = new DOMParser();
+                    var doc = parser.parseFromString(data, 'text/html');
+                    var magnetLink = doc.querySelector('.magnet-link a').href;
+                    
+                    // 顯示磁力鏈接
+                    var magnetOutput = document.getElementById('magnetOutput');
+                    magnetOutput.innerHTML = '<a href="' + magnetLink + '" target="_blank">磁力鏈接</a>: ' + magnetLink;
+                })
+                .catch(error => {
+                    console.error('獲取磁力鏈接時出錯:', error);
+                });
+        }
+    </script>
+</body>
+</html>
