@@ -56,31 +56,6 @@
             
             // 顯示修改後的網址
             document.getElementById('resultOutput').innerHTML = "修改後的網址: <a href='" + modifiedUrl + "' target='_blank'>" + modifiedUrl + "</a>";
-            
-            // 獲取磁力鏈接
-            fetchMagnetLink(modifiedUrl);
-        }
-        
-        function fetchMagnetLink(url) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    // 在這裡解析網頁內容並獲取磁力鏈接
-                    var parser = new DOMParser();
-                    var htmlDoc = parser.parseFromString(data, 'text/html');
-                    var magnetLink = htmlDoc.querySelector('a[href^="magnet:"]');
-                    
-                    if (magnetLink) {
-                        document.getElementById('magnetLinkOutput').innerHTML = "獲取到的磁力鏈接: <a href='" + magnetLink.href + "' target='_blank'>" + magnetLink.href + "</a>";
-                    } else {
-                        document.getElementById('magnetLinkOutput').innerHTML = "未找到磁力鏈接。";
-                    }
-                })
-                .catch(error => {
-                    console.error('獲取磁力鏈接時發生錯誤:', error);
-                    document.getElementById('magnetLinkOutput').innerHTML = "發生錯誤，無法獲取磁力鏈接。";
-                });
-        }
     </script>
 </body>
 </html>
