@@ -53,7 +53,7 @@
             var modifiedUrl = urlInput.replace(/download/g, 'view').replace(/\.torrent$/, '');
             
             // 將修改後的網址顯示在結果框中
-            document.getElementById('resultOutput').innerHTML = "修改後的網址: <a href='" + modifiedUrl + "' target='_blank'>" + modifiedUrl + "</a>";
+            document.getElementById('resultOutput').innerHTML = " <a href='" + modifiedUrl + "' target='_blank'>" + modifiedUrl + "</a>";
 
             // 使用 Fetch API 獲取磁力鏈接
             fetch(modifiedUrl)
