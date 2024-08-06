@@ -28,19 +28,16 @@
     }
     .result {
         margin-top: 20px;
-    }
-    .result a {
-        text-decoration: none;
-        color: blue;
+        padding: 10px;
+        border: 1px solid #ccc;
     }
 </style>
 </head>
 <body>
-    <!-- 修改sukebei網址一鍵改為可以直接餵給Aria2機器人的網址 -->
     <div class="container">
         <h2>修改網址</h2>
         <div class="input-group">
-            <input type="text" id="urlInput" placeholder="輸入網址...">
+            <input type="text" id="urlInput" placeholder="輸入網址..." value="https://sukebei.nyaa.si/download/4153894.torrent">
             <button onclick="modifyUrl()">轉換</button>
         </div>
         <div class="result" id="resultOutput"></div>
@@ -53,9 +50,8 @@
             // 將網址中的 'download' 替換為 'view' 並移除末尾的 '.torrent'
             var modifiedUrl = urlInput.replace(/download/g, 'view').replace(/\.torrent$/, '');
             
-            // 將修改後的網址顯示在結果框中，作為超連結
-            var resultOutput = document.getElementById('resultOutput');
-            resultOutput.innerHTML = '<a href="' + modifiedUrl + '" target="_blank">' + modifiedUrl + '</a>';
+            // 將修改後的網址顯示在結果框中
+            document.getElementById('resultOutput').innerHTML = "修改後的網址: " + modifiedUrl;
         }
     </script>
 </body>
