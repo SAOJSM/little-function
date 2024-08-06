@@ -34,7 +34,6 @@
 </style>
 </head>
 <body>
-    <!-- 修改sukebei網址一鍵改為可以直接餵給Aria2機器人的網址 -->
     <div class="container">
         <h2>修改和獲取網址</h2>
         <div class="input-group">
@@ -53,25 +52,26 @@
             var modifiedUrl = urlInput.replace(/download/g, 'view').replace(/\.torrent$/, '');
             
             // 將修改後的網址顯示在結果框中
-            document.getElementById('resultOutput').innerHTML = " <a href='" + modifiedUrl + "' target='_blank'>" + modifiedUrl + "</a>";
+            document.getElementById('resultOutput').innerHTML = "修改後的網址: <a href='" + modifiedUrl + "' target='_blank'>" + modifiedUrl + "</a>";
 
-            // 使用 Fetch API 獲取磁力鏈接
-            fetch(modifiedUrl)
-                .then(response => response.text())
-                .then(data => {
+            // 使用 XMLHttpRequest 獲取網頁內容並解析磁力鏈接
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", modifiedUrl, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = xhr.responseText;
+                    // 解析 HTML 取得磁力鏈接
                     var parser = new DOMParser();
-                    var htmlDoc = parser.parseFromString(data, 'text/html');
+                    var htmlDoc = parser.parseFromString(response, 'text/html');
                     var magnetLink = htmlDoc.querySelector('a[href^="magnet:?"]');
                     if (magnetLink) {
                         document.getElementById('magnetOutput').innerHTML = "自動獲取的磁力鏈接: <a href='" + magnetLink.href + "' target='_blank'>" + magnetLink.href + "</a>";
                     } else {
                         document.getElementById('magnetOutput').innerHTML = "未找到磁力鏈接。";
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('magnetOutput').innerHTML = "獲取磁力鏈接時出錯。";
-                });
+                }
+            };
+            xhr.send();
         }
     </script>
 </body>
