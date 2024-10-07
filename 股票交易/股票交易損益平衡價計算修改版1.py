@@ -21,3 +21,8 @@ if __name__ == "__main__":
 
         # 呼叫函數計算損益平衡價
         breakeven_price = calculate_breakeven_price(buy_price, discount, shares)
+
+    except ValueError as e:
+        print(f"錯誤: {e}")
+    except Exception as e:
+        print(f"程式執行出錯: {e}")
