@@ -18,3 +18,6 @@ if __name__ == "__main__":
         buy_price = float(input("請輸入買入價格："))
         discount = float(input("請輸入折數（0.1到10之間）："))
         shares = float(input("請輸入股數："))
+
+        # 呼叫函數計算損益平衡價
+        breakeven_price = calculate_breakeven_price(buy_price, discount, shares)
